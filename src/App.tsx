@@ -24,14 +24,22 @@ function App() {
   }
 
   const handleEditContact = (contact: Contact) => {
-    console.log('Editar contacto:', contact)
+    setEditingContact(contact)
   }
 
   const handleUpdateContact = (updatedContact: Contact) => {
-    console.log('Actualizar contacto:', updatedContact)
-  }
+  setContacts(contacts.map(c => (c.id === updatedContact.id ? updatedContact : c)))
+    setEditingContact(null)
+}
 
-  const filteredContacts = contacts
+
+  const filteredContacts = contacts.filter(contact => {
+    const term = searchTerm.toLowerCase()
+    return (
+      contact.name.toLowerCase().includes(term) ||
+      contact.phone.includes(term)
+    )
+  })
 
   return (
     <div className="app">
